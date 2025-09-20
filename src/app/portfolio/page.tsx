@@ -130,13 +130,13 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <div className="group relative rounded-2xl p-[1px] bg-gradient-to-tr from-[#8B5CF6]/30 to-[#3B82F6]/30 hover:from-[#8B5CF6] hover:to-[#3B82F6] transition">
       <Card className="h-full rounded-2xl bg-[#0E0E0E] border-white/10 overflow-hidden">
-        <div className="relative aspect-[16/10]">
+        <div className="relative aspect-[1200/630]">
           <Image
             src={project.image}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover"
+            className="object-cover object-top"
             priority={false}
           />
         </div>
