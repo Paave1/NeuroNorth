@@ -18,8 +18,23 @@ const BRAND = {
   violet: "#8B5CF6",
 };
 
+const CONTACT = {
+  email: "pavelkarasev987@gmial.com",
+  phone: "+358 46 5740203",
+};
+
 export default function Page() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+
+  useEffect(() => {
+    if (!contactOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setContactOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [contactOpen]);
   return (
     <div className="min-h-dvh w-full bg-[#0D0D0D] text-white antialiased">
       {/* Top Nav */}
@@ -315,10 +330,11 @@ export default function Page() {
                 </p>
               </div>
               <div className="flex flex-col items-start gap-3">
-                <Button asChild className="bg-[#3B82F6] hover:bg-[#2563EB] w-full md:w-auto">
-                  <a href="mailto:hello@neuronorth.io">Contact us</a>
+                <Button className="bg-[#3B82F6] hover:bg-[#2563EB] w-full md:w-auto" onClick={() => setContactOpen(true)}>
+                  Contact us
                 </Button>
-                <p className="text-sm text-white/60">Email: hello@neuronorth.io</p>
+                <p className="text-sm text-white/60">Email: {CONTACT.email}</p>
+                <p className="text-sm text-white/60">Phone: {CONTACT.phone}</p>
               </div>
             </div>
           </div>
@@ -373,6 +389,46 @@ export default function Page() {
       <style jsx global>{`
         html { scroll-behavior: smooth; }
       `}</style>
+      {/* Contact Modal */}
+      {contactOpen && (
+        <div className="fixed inset-0 z-[80]">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-100 animate-[fadeIn_200ms_ease-out]"
+            onClick={() => setContactOpen(false)}
+          />
+          <div className="absolute inset-0 grid place-items-center p-4">
+            <div
+              className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0E0E0E] shadow-2xl shadow-black/40 p-6 md:p-8 opacity-100 scale-100 animate-[popIn_200ms_ease-out]"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Quick contact"
+            >
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold tracking-tight">Quick contact</h3>
+                  <p className="mt-1 text-sm text-white/60">Tell us briefly about your need, we’ll reply same day.</p>
+                </div>
+                <button
+                  aria-label="Close dialog"
+                  onClick={() => setContactOpen(false)}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/90 hover:bg-white/10"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeOpacity="0.9" strokeWidth="1.5" />
+                  </svg>
+                </button>
+              </div>
+
+              <ContactForm />
+            </div>
+          </div>
+          <style jsx>{`
+            @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+            @keyframes popIn { from { opacity: 0; transform: translateY(8px) scale(0.98) } to { opacity: 1; transform: translateY(0) scale(1) } }
+          `}</style>
+        </div>
+      )}
     </div>
   );
 }
@@ -608,6 +664,45 @@ function TestimonialCard({ quote, author }: { quote: string; author: string }) {
       <p className="text-white/80">&ldquo;{quote}&rdquo;</p>
       <p className="mt-4 text-sm text-white/60">— {author}</p>
     </div>
+  );
+}
+
+function ContactForm() {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const message = String(data.get("message") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const subject = encodeURIComponent(`New inquiry from ${name || "Website"}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="grid gap-4">
+      <div className="grid gap-2">
+        <label className="text-sm text-white/80" htmlFor="name">Name</label>
+        <input id="name" name="name" placeholder="Your name" className="rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 outline-none focus:border-white/30" />
+      </div>
+      <div className="grid gap-2">
+        <label className="text-sm text-white/80" htmlFor="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="you@company.com" className="rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 outline-none focus:border-white/30" />
+      </div>
+      <div className="grid gap-2">
+        <label className="text-sm text-white/80" htmlFor="phone">Phone</label>
+        <input id="phone" name="phone" placeholder="+358 ..." className="rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 outline-none focus:border-white/30" />
+      </div>
+      <div className="grid gap-2">
+        <label className="text-sm text-white/80" htmlFor="message">Message</label>
+        <textarea id="message" name="message" rows={4} required placeholder="How can we help?" className="rounded-md border border-white/15 bg-white/[0.04] px-3 py-2 outline-none focus:border-white/30" />
+      </div>
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <Button type="submit" className="bg-[#3B82F6] hover:bg-[#2563EB]">Send</Button>
+        <p className="text-xs text-white/50">Or email: {CONTACT.email}</p>
+      </div>
+    </form>
   );
 }
 
