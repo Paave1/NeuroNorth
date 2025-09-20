@@ -15,6 +15,27 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    title: "Lohjan Autoclean",
+    description: "Autopesu ja -hoito – 30+ vuoden kokemus.",
+    image: "https://images.unsplash.com/photo-1515923162046-7831d1b93986?q=80&w=1600&auto=format&fit=crop",
+    tags: ["Website", "Services"],
+    href: "https://preview-lohjan-autoclean.vercel.app/",
+  },
+  {
+    title: "LuxeGlow Salon",
+    description: "Premium-kauneushoitola – portfolio ja varaukset.",
+    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
+    tags: ["Website", "Beauty"],
+    href: "https://beauty-salon-demo-ruddy.vercel.app/",
+  },
+  {
+    title: "PikaVoltti Oy",
+    description: "Sähköpalvelut – asennukset, huollot, EV-lataus.",
+    image: "https://images.unsplash.com/photo-1519985176271-adb1088fa94c?q=80&w=1600&auto=format&fit=crop",
+    tags: ["Website", "Electrical"],
+    href: "https://pikavoltti.vercel.app/",
+  },
+  {
     title: "Varatek",
     description: "Corporate website for Varatek.",
     image: "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?q=80&w=1600&auto=format&fit=crop",
