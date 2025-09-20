@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ const BRAND = {
 };
 
 export default function Page() {
+  const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <div className="min-h-dvh w-full bg-[#0D0D0D] text-white antialiased">
       {/* Top Nav */}
@@ -37,7 +38,7 @@ export default function Page() {
             <a href="#about" className="hover:text-white transition">About</a>
             <a href="#contact" className="hover:text-white transition">Contact</a>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <Button asChild variant="outline" className="border-white/10 text-white hover:bg-white/5">
               <a href="#cases">See case studies</a>
             </Button>
@@ -45,7 +46,63 @@ export default function Page() {
               <a href="#contact">Request a solution</a>
             </Button>
           </div>
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              type="button"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen((v) => !v)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/90 hover:bg-white/10"
+            >
+              {mobileOpen ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeOpacity="0.9" strokeWidth="1.5" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeOpacity="0.9" strokeWidth="1.5" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
+        {/* Mobile drawer */}
+        {mobileOpen && (
+          <div className="md:hidden">
+            <div className="fixed inset-0 z-50 bg-black/60" onClick={() => setMobileOpen(false)} />
+            <div className="fixed inset-y-0 right-0 z-50 w-[82%] max-w-xs rounded-l-2xl border-l border-white/10 bg-[#0D0D0D]/95 backdrop-blur p-6">
+              <div className="flex items-center justify-between">
+                <span className="text-sm tracking-widest uppercase text-white/90">Menu</span>
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/90 hover:bg-white/10"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeOpacity="0.9" strokeWidth="1.5" />
+                  </svg>
+                </button>
+              </div>
+              <nav className="mt-6 grid gap-4 text-base text-white/80">
+                <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#services">Services</a>
+                <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#why">Why us</a>
+                <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#cases">Cases</a>
+                <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#about">About</a>
+                <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#contact">Contact</a>
+              </nav>
+              <div className="mt-6 grid gap-3">
+                <Button asChild variant="outline" className="border-white/10 text-white hover:bg-white/5 w-full">
+                  <a href="#cases" onClick={() => setMobileOpen(false)}>See case studies</a>
+                </Button>
+                <Button asChild className="bg-[#3B82F6] hover:bg-[#2563EB] w-full">
+                  <a href="#contact" onClick={() => setMobileOpen(false)}>Request a solution</a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
