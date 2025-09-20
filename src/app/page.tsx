@@ -222,11 +222,12 @@ export default function Page() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-1">
                 <div className="rounded-xl border border-white/10 bg-[#0D0D0D] p-6">
                   <Image
-                    src="https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?q=80&w=1400&auto=format&fit=crop"
-                    alt="Neural grid abstract"
+                    src="/neural-mesh.svg"
+                    alt="Neural mesh abstract"
                     width={1200}
                     height={800}
                     className="rounded-lg object-cover"
+                    priority
                   />
                   <p className="mt-3 text-sm text-white/60">Scandinavian minimalism, engineered for speed.</p>
                 </div>
