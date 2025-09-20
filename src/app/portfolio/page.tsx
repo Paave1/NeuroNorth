@@ -15,6 +15,13 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    title: "Varatek",
+    description: "Corporate website for Varatek.",
+    image: "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?q=80&w=1600&auto=format&fit=crop",
+    tags: ["Website", "Corporate"],
+    href: "https://www.varatek.fi",
+  },
+  {
     title: "E‑commerce Revamp",
     description: "Modern storefront with headless CMS and search.",
     image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1600&auto=format&fit=crop",
