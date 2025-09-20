@@ -37,6 +37,7 @@ export default function Page() {
             <a href="#cases" className="hover:text-white transition">Cases</a>
             <a href="#about" className="hover:text-white transition">About</a>
             <a href="#contact" className="hover:text-white transition">Contact</a>
+            <Link href="/portfolio" className="hover:text-white transition">Portfolio</Link>
           </nav>
           <div className="hidden md:flex items-center gap-3">
             <Button asChild variant="outline" className="border-white/10 text-white hover:bg-white/5">
@@ -91,6 +92,7 @@ export default function Page() {
                 <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#cases">Cases</a>
                 <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#about">About</a>
                 <a onClick={() => setMobileOpen(false)} className="hover:text-white" href="#contact">Contact</a>
+                <Link href="/portfolio" onClick={() => setMobileOpen(false)} className="hover:text-white">Portfolio</Link>
               </nav>
               <div className="mt-6 grid gap-3">
                 <Button asChild variant="outline" className="border-white/10 text-white hover:bg-white/5 w-full">
